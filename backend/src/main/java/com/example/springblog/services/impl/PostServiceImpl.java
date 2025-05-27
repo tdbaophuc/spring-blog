@@ -41,22 +41,26 @@ public class PostServiceImpl implements PostServices {
 
     //    Create new post
     @Override
-    public PostDto createPost(PostDto postDto, Long userId, Long categoryId) {
-        Optional<Category> category = categoryRepository.findById(categoryId);
-        if (!category.isPresent()) throw new ResourceNotFoundException("Category", "id", categoryId);
+public PostDto createPost(PostDto postDto, Long userId, Long categoryId) {
+    Category category = categoryRepository.findById(categoryId)
+        .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
 
-        Users user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+    Users user = userRepository.findById(userId)
+        .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
-        Post post = modelMapper.map(postDto, Post.class);
+    Post post = new Post();
+    post.setTitle(postDto.getTitle());
+    System.out.println("post title: " + post.getTitle());
+    post.setContent(postDto.getContent());
+    post.setImageName(postDto.getImageName() != null ? postDto.getImageName() : "default.jpg");
+    post.setAddedDate(new Date());
+    post.setCategory(category);
+    post.setUsers(user);
 
-//        post.setImageName("default.jpg");
-        post.setAddedDate(new Date());
-        post.setUsers(user);
-        post.setCategory(category.get());
+    Post savedPost = postRepository.save(post);
+    return modelMapper.map(savedPost, PostDto.class);
+}
 
-        Post savedPost = postRepository.save(post);
-        return modelMapper.map(savedPost, PostDto.class);
-    }
 
     //UPDATE post by postId
     @Override
