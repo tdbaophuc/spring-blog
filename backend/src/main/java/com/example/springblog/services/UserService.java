@@ -2,6 +2,7 @@ package com.example.springblog.services;
 
 import com.example.springblog.payload.UserDto;
 import com.example.springblog.response.UserDetailResponse;
+import com.example.springblog.payload.UserUpdateDto;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface UserService {
     List<UserDetailResponse> getAllUserList();
 
     void deleteUser(Long userId);
+
+    UserDto updateUserFromUpdateDto(UserUpdateDto userUpdateDto, Long userId);
 
 }

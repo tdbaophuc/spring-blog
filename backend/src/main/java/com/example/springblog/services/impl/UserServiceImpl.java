@@ -5,6 +5,7 @@ import com.example.springblog.entities.Role;
 import com.example.springblog.entities.Users;
 import com.example.springblog.exceptions.ResourceNotFoundException;
 import com.example.springblog.payload.UserDto;
+import com.example.springblog.payload.UserUpdateDto;
 import com.example.springblog.repositories.RoleRepository;
 import com.example.springblog.repositories.UserRepository;
 import com.example.springblog.response.UserDetailResponse;
@@ -108,5 +109,20 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = modelMapper.map(users, UserDto.class);
         return userDto;
     }
+
+    @Override
+public UserDto updateUserFromUpdateDto(UserUpdateDto userUpdateDto, Long userId) {
+    Users users = userRepository.findById(userId)
+            .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+
+    // Cập nhật từng trường, không đụng đến password
+    users.setName(userUpdateDto.getName());
+    users.setAbout(userUpdateDto.getAbout());
+    users.setEmail(userUpdateDto.getEmail());
+
+    Users updatedUser = userRepository.save(users);
+
+    return convertUsersToDto(updatedUser);
+}
 
 }

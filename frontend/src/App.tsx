@@ -39,6 +39,8 @@ import UnAuthorized from "./pages/UnAuthorized";
 import Write from "./pages/write";
 import PrivateOutlet from "./routes/PrivateOutlet";
 import PublicOutlet from "./routes/PublicOutlet";
+import EditUserPage from "./pages/profile/EditUserPage";
+
 
 function App() {
     const checkAuth = useAuth();
@@ -77,6 +79,7 @@ function App() {
                         {/* DESC:: PRIVATE USER ROUTES */}
                         <Route element={<PrivateOutlet allowed={ROLE_USER} />}>
                             <Route path={PROFILE} element={<Profile />} />
+                            <Route path="/edit-profile" element={<EditUserPage />} />
                             <Route
                                 path={`${CATEGORY}/:catId`}
                                 element={<Category />}
@@ -105,7 +108,6 @@ function App() {
 }
 
 export default App;
-
 function ScrollToTop() {
     const { pathname } = useLocation();
 
@@ -115,3 +117,4 @@ function ScrollToTop() {
 
     return null;
 }
+

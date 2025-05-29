@@ -37,7 +37,7 @@ const LatestBlog = () => {
 
     let showContent = null;
 
-    /* @DESC::  Show Loader */
+    /*  Show Loader */
     if (isLoading) {
         showContent = (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-10 mt-4">
@@ -47,11 +47,11 @@ const LatestBlog = () => {
             </div>
         );
     }
-    /* @DESC::  Show Error */
+    /*  Show Error */
     if (!isLoading && isError && error) {
         showContent = <Message error={isError} message={error} />;
     }
-    /* @DESC::  Show Content */
+    /* Show Content */
     if (!isLoading && !isError && content.length > 0) {
         showContent = (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-10 mt-4">
@@ -61,12 +61,12 @@ const LatestBlog = () => {
             </div>
         );
     }
-    /* @DESC::  Show No Content */
+    /*   Show No Content */
     if (!isLoading && !isError && content.length === 0) {
         showContent = <Message error message={"No Stories Available"} />;
     }
 
-    /* @DESC::  Pagination Logic */
+    /*   Pagination Logic */
 
     // Invoke when user click to request another page.
     const handlePageClick = (event: any) => {

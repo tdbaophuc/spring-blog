@@ -2,9 +2,11 @@ import { AiOutlineMail } from "react-icons/ai";
 import { MdSystemUpdateAlt } from "react-icons/md";
 import { useAppSelector } from "../../redux/app/hooks";
 import { selectAuth } from "../../redux/features/login/loginSlice";
+import { useNavigate } from "react-router-dom";
 
 const UserDetails = () => {
     const { user } = useAppSelector(selectAuth);
+    const navigate = useNavigate();
     return (
         <div className="relative w-full">
             <div className="-mt-14  lg:-mt-14 -top-14  w-full ">
@@ -27,10 +29,14 @@ const UserDetails = () => {
                 </div>
 
                 <div className="">
-                    <button className=" font-semibold bg-blue-600 text-white flex items-center gap-3 py-2 px-4 shadow-sm  rounded-lg mt-6 hover:bg-blue-800">
-                        <MdSystemUpdateAlt size={25} />{" "}
-                        <span>Update Profile</span>
-                    </button>
+                    <button
+    className="font-semibold bg-blue-600 text-white flex items-center gap-3 py-2 px-4 shadow-sm rounded-lg mt-6 hover:bg-blue-800"
+    onClick={() => navigate("/edit-profile")} 
+>
+    <MdSystemUpdateAlt size={25} />
+    <span>Update Profile</span>
+</button>
+
                 </div>
             </div>
         </div>
