@@ -39,3 +39,6 @@ This application is a fullstack blog sharing platform where user can write their
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+# Video Demo:
+`https://drive.google.com/file/d/1Y9bYBujWQzk6IxxX0q_mSQdh2pHsznUH/view?usp=sharing`
+
