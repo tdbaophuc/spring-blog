@@ -1,14 +1,13 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 
 type Props = {
-    children?: JSX.Element | JSX.Element[];
+    children?: ReactNode;
     className?: string;
 };
-const Container: FC<Props> = ({ children, className = " py-8 " }) => {
+
+const Container: FC<Props> = ({ children, className = "py-8" }) => {
     return (
-        <div
-            className={" px-4 md:px-8  sm:container mx-auto " + " " + className}
-        >
+        <div className={`px-4 md:px-8 sm:container mx-auto ${className}`}>
             {children}
         </div>
     );

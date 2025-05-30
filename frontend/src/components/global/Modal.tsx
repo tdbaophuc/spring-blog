@@ -1,22 +1,31 @@
-import { useEffect } from "react";
+import { useEffect, ReactNode } from "react";
 
 interface IProps {
-    children?: JSX.Element | JSX.Element[];
-    isOpen: any;
+  children?: ReactNode;
+  isOpen: boolean;
 }
 
 const Modal = ({ children, isOpen }: IProps) => {
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "";
-        }
-    }, [isOpen]);
-    let className = isOpen
-        ? "fixed top-0 right-0 left-0 bottom-0 bg-gray-600 bg-opacity-40 z-40"
-        : "hidden";
-    return <div className={className}>{children}</div>;
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    // Clean up khi component unmount hoặc isOpen thay đổi
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-40 z-40 flex items-center justify-center">
+      {children}
+    </div>
+  );
 };
 
 export default Modal;

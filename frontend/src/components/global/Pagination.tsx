@@ -15,36 +15,31 @@ const Pagination = ({
         <div>
             <ReactPaginate
                 breakLabel="..."
-                nextLabel="next"
+                nextLabel="Next >"
                 onPageChange={onClick}
                 pageRangeDisplayed={4}
+                marginPagesDisplayed={1}
                 pageCount={pageCount}
-                previousLabel="prev"
-                activeClassName="bg-gray-700 font-bold text-white "
-                pageLinkClassName="px-4 py-2 "
-                nextLinkClassName={
+                previousLabel="< Prev"
+                activeClassName="bg-orange-500 text-white font-semibold shadow-md"
+                pageLinkClassName="px-4 py-2 rounded-md hover:bg-orange-300 cursor-pointer transition"
+                breakClassName="px-3 text-gray-400 select-none"
+                breakLinkClassName="cursor-default"
+                nextClassName={`px-4 py-2 rounded-md transition ${
                     lastPage
-                        ? "text-gray-300 hover:cursor-not-allowed"
-                        : "text-gray-600"
-                }
-                nextClassName={
-                    lastPage
-                        ? "text-gray-300 hover:cursor-not-allowed"
-                        : "text-gray-600"
-                }
-                previousClassName={
+                        ? "text-gray-300 cursor-not-allowed"
+                        : "text-orange-600 hover:bg-orange-300 cursor-pointer"
+                }`}
+                nextLinkClassName="block"
+                previousClassName={`px-4 py-2 rounded-md transition ${
                     firstPage
-                        ? "text-gray-300 hover:cursor-not-allowed"
-                        : "text-gray-600"
-                }
-                previousLinkClassName={
-                    firstPage
-                        ? "text-gray-300 hover:cursor-not-allowed"
-                        : "text-gray-600"
-                }
-                containerClassName=" border border-gray-100 w-auto gap-2 shadow-sm flex  items-center px-4 rounded mt-10  text-gray-500"
-                pageClassName="border  rounded py-1"
-                // renderOnZeroPageCount={null}
+                        ? "text-gray-300 cursor-not-allowed"
+                        : "text-orange-600 hover:bg-orange-300 cursor-pointer"
+                }`}
+                previousLinkClassName="block"
+                containerClassName="flex items-center justify-center gap-2 mt-8 px-3 py-2 border border-gray-200 rounded-md shadow-sm text-gray-600 select-none"
+                pageClassName="border border-transparent"
+                disabledClassName="opacity-50"
             />
         </div>
     );

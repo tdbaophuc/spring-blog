@@ -11,55 +11,57 @@ interface IProps {
 }
 const HorizontalCard = ({ data }: IProps) => {
     return (
-        <div>
-            <div className="flex flex-col  md:flex-row justify-start md:justify-center bg-gray-100  ">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <div className="flex flex-col md:flex-row">
+                {/* Image Section */}
                 <div
-                    className="bg-gray-500 h-[300px]   md:w-[35%] lg:w-[40%] md:h-auto bg-no-repeat bg-cover bg-center rounded-md"
+                    className="md:w-[35%] lg:w-[40%] h-64 md:h-auto bg-center bg-cover rounded-t-lg md:rounded-l-lg md:rounded-tr-none"
                     style={{
-                        backgroundImage: `url( ${BLOG_IMAGE_ENDPOINT}${data.imageName})`,
+                        backgroundImage: `url(${BLOG_IMAGE_ENDPOINT}${data.imageName})`,
                     }}
+                    role="img"
+                    aria-label={data.title}
                 ></div>
-                <div className="px-4 py-2 md:px-8  bg-gray-50 flex-1 flex flex-col items-start">
-                    <CategoryBtn name={data.category?.categoryTitle || "Unknown"} color={PRIMARY} />
-                    <Link to={`story/${data.id}`}>
-                        <h1 className="text-left text-gray-600 font-bold mt-2 mb-3 line-clamp-2 text-2xl sm:text-3xl md:text-2xl  hover:underline hover:cursor-pointer lg:pr-8">
+
+                {/* Content Section */}
+                <div className="flex flex-col flex-1 p-6 bg-gray-50">
+                    <CategoryBtn
+                        name={data.category?.categoryTitle || "Unknown"}
+                        color={PRIMARY}
+                    />
+
+                    <Link to={`story/${data.id}`} className="mt-2">
+                        <h2 className="text-gray-800 font-extrabold text-2xl sm:text-3xl line-clamp-2 hover:text-orange-500 transition-colors cursor-pointer">
                             {data.title}
-                        </h1>
+                        </h2>
                     </Link>
 
-                    {/* AVATAR  */}
-
-                    <div>
-                        <div className="flex items-center my-3">
-                            <UserInfo
-                                name={data.users.name}
-                                avatar={AVATAR_URL}
-                            />
-                        </div>
+                    <div className="flex items-center mt-4 mb-3">
+                        <UserInfo name={data.users.name} avatar={AVATAR_URL} />
                     </div>
-                    {/* bottom Text */}
+
                     <div
                         dangerouslySetInnerHTML={{ __html: data.content }}
-                        className="text-md text-gray-500 my-2 line-clamp-2"
+                        className="text-gray-600 text-base line-clamp-3 mb-4"
                     ></div>
 
-                    <button className="bg-transparent outline-none border-none cursor-pointer text-rose-500 mt-2 hover:cursor-pointer hover:underline transition-all ">
-                        Read more..
-                    </button>
+                    <Link
+                        to={`story/${data.id}`}
+                        className="self-start text-orange-500 font-semibold hover:underline transition"
+                    >
+                        Read more &rarr;
+                    </Link>
 
-                    <div className="mt-auto">
-                        <p className="text-gray-400 mt-3 text-sm ">
-                            Published:{" "}
-                            <span className="font-semibold">
-  {new Date(data.addedDate).toLocaleDateString("vi-VN", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  })}
-</span>
-
-                        </p>
-                    </div>
+                    <p className="text-gray-400 text-sm mt-auto pt-4 border-t border-gray-200">
+                        Published:{" "}
+                        <time dateTime={data.addedDate}>
+                            {new Date(data.addedDate).toLocaleDateString("vi-VN", {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                            })}
+                        </time>
+                    </p>
                 </div>
             </div>
         </div>
