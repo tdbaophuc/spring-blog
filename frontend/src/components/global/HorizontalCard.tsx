@@ -20,7 +20,7 @@ const HorizontalCard = ({ data }: IProps) => {
                     }}
                 ></div>
                 <div className="px-4 py-2 md:px-8  bg-gray-50 flex-1 flex flex-col items-start">
-                    <CategoryBtn name="Programming" color={PRIMARY} />
+                    <CategoryBtn name={data.category?.categoryTitle || "Unknown"} color={PRIMARY} />
                     <Link to={`story/${data.id}`}>
                         <h1 className="text-left text-gray-600 font-bold mt-2 mb-3 line-clamp-2 text-2xl sm:text-3xl md:text-2xl  hover:underline hover:cursor-pointer lg:pr-8">
                             {data.title}
@@ -50,7 +50,14 @@ const HorizontalCard = ({ data }: IProps) => {
                     <div className="mt-auto">
                         <p className="text-gray-400 mt-3 text-sm ">
                             Published:{" "}
-                            <span className="font-semibold">25 Jun 2022</span>
+                            <span className="font-semibold">
+  {new Date(data.addedDate).toLocaleDateString("vi-VN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  })}
+</span>
+
                         </p>
                     </div>
                 </div>

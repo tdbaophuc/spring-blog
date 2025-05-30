@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -87,12 +88,18 @@ public class UserServiceImpl implements UserService {
         return userResponse;
     }
 
-    @Override
-    public void deleteUser(Long userId) {
-        Users user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-        userRepository.delete(user);
-    }
+    @Transactional
+@Override
+public void deleteUser(Long userId) {
+    Users user = userRepository.findById(userId)
+            .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+
+    //  Clear roles trước khi xoá user để tránh lỗi ràng buộc
+    user.getRoles().clear();
+    userRepository.save(user); // Cập nhật lại user không còn liên kết role
+
+    userRepository.delete(user);
+}
 
     private Users convertDtoToUsers(UserDto userDto) {
         Users users = modelMapper.map(userDto, Users.class);

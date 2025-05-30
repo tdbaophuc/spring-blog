@@ -68,10 +68,10 @@ const CategoryButton = () => {
             {showCategory}
 
             <div className="mt-24 mb-6 hidden lg:flex items-center justify-center gap-2  text-gray-500">
-                <p className="text-gray-500 text-xs">copyright&copy;habib610</p>
+                <p className="text-gray-500 text-xs">Bao Phuc-Van Tien</p>
                 <a
                     target="_blank"
-                    href="https:rhabib.dev"
+                    href="https://www.facebook.com/baophuc.tran.5245"
                     className="hover:underline cursor-pointer text-xs"
                     rel="noreferrer"
                 >

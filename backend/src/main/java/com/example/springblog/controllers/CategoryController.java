@@ -25,7 +25,7 @@ public class CategoryController {
     public final Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
 
     //    POST - Create new category
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<CategoryDto> createNewCategory(@Valid @RequestBody CategoryDto categoryDto) {
         CategoryDto categoryDto1 = categoryServices.createCategory(categoryDto);
         return new ResponseEntity<>(categoryDto1, HttpStatus.CREATED);

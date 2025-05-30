@@ -23,6 +23,7 @@ const Trending = () => {
                 setIsLoading(true);
                 setIsLoading(false);
                 const res = await (await axios.get(TOP_POST_ENDPOINT)).data;
+                console.log("TOP POSTS >>>", res);
                 setTrending(res);
                 setIsLoading(false);
             } catch (error: any) {
