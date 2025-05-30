@@ -5,21 +5,22 @@ interface IProps {
     className?: string;
     onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
     loading?: boolean;
-    component?: any;
+    component?: React.ElementType;
     bg?: string;
     rest?: any;
     disabled?: boolean;
     icon?: IconType;
 }
+
 const Button = ({
     title,
-    className = " ",
+    className = "",
     onClick,
     loading = false,
     component: Component,
     disabled = false,
     icon: Icon,
-    bg = "  bg-gray-700",
+    bg = "bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300",
     ...rest
 }: IProps) => {
     return (
@@ -29,22 +30,28 @@ const Button = ({
             {...rest}
             disabled={disabled || loading}
             className={
-                "disabled:bg-gray-100  disabled:text-gray-700 hover:cursor-pointer disabled:cursor-not-allowed shadow shadow-blue-400    my-4 w-full hover:shadow-none disabled:shadow-none hover:bg-black text-white py-2 px-4 font-bold rounded-md disabled:border disabled:border-gray-200 flex  items-center justify-center " +
-                bg +
-                " " +
-                className
+                `flex items-center justify-center w-full py-2 px-5 rounded-lg
+                 font-semibold text-white
+                 shadow-md
+                 transition
+                 duration-300
+                 ease-in-out
+                 disabled:cursor-not-allowed disabled:opacity-60
+                 ${bg}
+                 hover:shadow-lg
+                 ${className}`
             }
         >
-            {Icon && <Icon className="mr-1" />}
+            {Icon && !loading && <Icon className="mr-2 text-lg" />}
             {loading ? (
-                <div className="flex gap-2 items-center justify-center">
-                    <div className="w-5 h-5 border-4 border-blue-500 border-dotted rounded-full animate-spin"></div>
-                    {title && " Loading..."}
+                <div className="flex items-center gap-3">
+                    <div className="w-5 h-5 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                    {title && <span className="select-none">Loading...</span>}
                 </div>
             ) : title ? (
                 title
             ) : (
-                <Component />
+                Component && <Component />
             )}
         </button>
     );

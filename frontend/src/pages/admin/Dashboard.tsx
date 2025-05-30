@@ -1,7 +1,7 @@
 import AdminCard from "../../components/admin/AdminCard";
 import Container from "../../components/global/Container";
 import images from "../../constants/images";
-import { CATEGORY, DASHBOARD, HOME, USERS } from "../../constants/routes";
+import { ADD_CATEGORY, DASHBOARD, HOME, USERS } from "../../constants/routes";
 const Dashboard = () => {
     return (
         <Container>
@@ -11,7 +11,7 @@ const Dashboard = () => {
                 <AdminCard
                     src={images.category}
                     title="Categories"
-                    link={CATEGORY}
+                    link={ADD_CATEGORY}
                 />
                 <AdminCard
                     src={images.activity}

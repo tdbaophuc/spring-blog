@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
-
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
 import { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { HiMenuAlt4 } from "react-icons/hi";
@@ -31,43 +29,47 @@ const Navbar = () => {
         userAvatar = <UserMenu />;
     }
     const navItems = user && token ? authLinks : links;
-    let regularClass =
-        "px-3 py-2 border-1 border-orange-50 font-semibold hover:text-white hover:bg-orange-400 text-white rounded-md  ";
-    let activeClass =
-        "px-3 py-2 border-1 border-orange-50 font-semibold text-white text-white rounded-md border-b";
+
+    const regularClass =
+        "px-4 py-2 rounded-md font-semibold text-blue-800 hover:text-white hover:bg-orange-400 transition duration-300 ease-in-out cursor-pointer";
+    const activeClass =
+        "px-4 py-2 rounded-md font-semibold text-white bg-orange-500 shadow-md cursor-default";
+
     return (
         <nav>
             <div
                 className={
                     isHidden
                         ? "hidden"
-                        : " backdrop-blur-xl fixed top-0 left-0 right-0 bg-gray-700 z-10"
+                        : "fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-gradient-to-r from-white/70 via-white/50 to-white/70 shadow-md border-b border-gray-200"
                 }
             >
-                <div className="flex px-4 md:px-8 justify-between items-center links-center py-3 sm:container mx-auto  ">
-                    <div>
-                        <Link to={HOME}>
-                            <div>
-                                <img
-                                    src={images.logo}
-                                    className="hidden sm:block w-[100px] sm:w-[120px] md:w-[140px] lg:w-[200px] "
-                                    alt="HR_Books"
-                                />
-                                <img
-                                    src={images.logoSmall}
-                                    className="block sm:hidden w-[40px] mr-3 "
-                                    alt="HR_Books"
-                                />
-                            </div>
-                        </Link>
-                    </div>
-                    <div>
+                <div className="flex justify-between items-center max-w-7xl mx-auto px-6 md:px-12 py-3">
+                    {/* Logo */}
+                    <Link to={HOME} className="flex items-center">
+                        <img
+                            src={images.logo}
+                            alt="HR_Books"
+                            className="hidden sm:block w-[140px] md:w-[160px] lg:w-[200px] drop-shadow-md"
+                        />
+                        <img
+                            src={images.logoSmall}
+                            alt="HR_Books"
+                            className="block sm:hidden w-10 mr-3"
+                        />
+                    </Link>
+
+                    {/* SearchBar */}
+                    <div className="flex-grow max-w-xl mx-6 hidden md:block">
                         <SearchBar />
                     </div>
 
-                    <div className="flex items-center md:flex-row-reverse">
+                    {/* Nav & User */}
+                    <div className="flex items-center space-x-4 md:space-x-6">
                         {userAvatar}
-                        <ul className="hidden md:flex flex-end items-center gap-2">
+
+                        {/* Desktop menu */}
+                        <ul className="hidden md:flex items-center gap-3">
                             {navItems.map((link) => (
                                 <li key={link.id}>
                                     <Link to={link.link}>
@@ -85,47 +87,45 @@ const Navbar = () => {
                             ))}
                         </ul>
 
-                        <div className="block md:hidden ">
+                        {/* Mobile menu button */}
+                        <div className="md:hidden">
                             <button
                                 onClick={() => setIsOpen(true)}
-                                className="bg-orange-500 text-white h-[30px] w-[30px] flex items-center  justify-center rounded-full"
+                                aria-label="Open menu"
+                                className="bg-orange-400 text-white p-2 rounded-full shadow-md hover:bg-orange-500 transition"
                             >
-                                <HiMenuAlt4 className="text-xl" />
+                                <HiMenuAlt4 className="text-2xl" />
                             </button>
+
+                            {/* Mobile slide menu */}
                             {isOpen && (
                                 <motion.div
-                                    whileInView={{ x: [300, 0] }}
-                                    transition={{
-                                        duration: 0.75,
-                                        ease: "easeOut",
-                                    }}
-                                    exit={{ x: [-300, 0] }}
-                                    className="fixed top-0 right-0 w-[80%] h-screen bg-blue-500"
+                                    initial={{ x: 300 }}
+                                    animate={{ x: 0 }}
+                                    exit={{ x: 300 }}
+                                    transition={{ duration: 0.5, ease: "easeOut" }}
+                                    className="fixed top-0 right-0 h-full w-4/5 max-w-xs bg-white shadow-xl border-l border-gray-200 p-6 flex flex-col z-50"
                                 >
-                                    <div className="flex justify-end mt-4 mx-4 m-3">
+                                    <div className="flex justify-end mb-6">
                                         <button
-                                            onClick={() => {
-                                                setIsOpen(false);
-                                            }}
-                                            className="bg-orange-500 text-white h-[30px] w-[30px] flex  items-center justify-center rounded-full"
+                                            onClick={() => setIsOpen(false)}
+                                            aria-label="Close menu"
+                                            className="bg-orange-400 text-white p-2 rounded-full shadow-md hover:bg-orange-500 transition"
                                         >
-                                            <AiOutlineClose />
+                                            <AiOutlineClose className="text-2xl" />
                                         </button>
                                     </div>
-                                    <ul className="flex flex-col justify-start">
+                                    <ul className="flex flex-col gap-4 text-blue-900 font-semibold text-lg">
                                         {navItems.map((link) => (
                                             <li
-                                                role="button"
+                                                key={link.id}
                                                 onClick={() => {
                                                     navigate(link.link);
                                                     setIsOpen(false);
                                                 }}
-                                                key={link.id}
-                                                className="px-3 py-2 border-1 border-orange-50 font-semibold hover:text-white hover:bg-orange-400 w-100mb-2  "
+                                                className="cursor-pointer hover:text-orange-500 transition"
                                             >
-                                                <span className="text-white ">
-                                                    {link.label}
-                                                </span>
+                                                {link.label}
                                             </li>
                                         ))}
                                     </ul>
@@ -143,12 +143,15 @@ export default Navbar;
 
 const SearchBar = () => {
     const { pathname } = useLocation();
-
     const navigate = useNavigate();
     const [value, setValue] = useState("");
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        navigate(`${SEARCH}?query=${value.trim().replaceAll(" ", "+")}`);
+        const query = value.trim().replaceAll(" ", "+");
+        if (query.length > 0) {
+            navigate(`${SEARCH}?query=${query}`);
+        }
     };
 
     useEffect(() => {
@@ -156,34 +159,35 @@ const SearchBar = () => {
             setValue("");
         }
     }, [pathname]);
+
     return (
         <form
             onSubmit={handleSubmit}
-            className=" w-[100%] md:w-[80%] flex rounded-full border transition-all shadow-sm  border-gray-400  focus-within:border-blue-500 items-center overflow-hidden relative"
+            className="w-full flex items-center rounded-full border border-gray-300 shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-400 transition"
         >
             <input
+                type="text"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 placeholder="Search for stories"
-                type="text"
-                className="outline-none border-none focus:border-none  px-3 w-full rounded-full  flex-1 h-full py-2 pl-6 text-sm text-gray-500"
+                className="flex-grow px-4 py-2 rounded-l-full text-gray-700 placeholder-gray-400 focus:outline-none"
             />
-
-            <button className="absolute top-0 right-0 bottom-0 px-4 ">
+            <button
+                type="submit"
+                className="bg-blue-600 hover:bg-blue-700 rounded-r-full p-2 flex items-center justify-center"
+                aria-label="Search"
+            >
                 <svg
-                    className="text-gray-600 h-4 w-4 fill-current"
+                    className="text-white w-5 h-5"
                     xmlns="http://www.w3.org/2000/svg"
-                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                    version="1.1"
-                    id="Capa_1"
-                    x="0px"
-                    y="0px"
                     viewBox="0 0 56.966 56.966"
-                    xmlSpace="preserve"
-                    width="512px"
-                    height="512px"
                 >
-                    <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+                    <path
+                        d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23
+                    s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92
+                    c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17
+                    s-17-7.626-17-17S14.61,6,23.984,6z"
+                    />
                 </svg>
             </button>
         </form>

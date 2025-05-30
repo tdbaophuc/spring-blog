@@ -24,41 +24,41 @@ const UsersList = () => {
 
     if (isLoading) {
         showUserList = (
-            <div>
+            <div className="space-y-4">
                 {[1, 2, 3, 4, 5].map((item) => (
                     <div
                         key={item}
-                        className="w-full h-16 bg-slate-200 animate-pulse mb-4=2"
+                        className="w-full h-16 bg-gray-300 rounded-lg animate-pulse"
                     ></div>
                 ))}
             </div>
         );
-    }
-    if (!isLoading && isError) {
+    } else if (isError) {
         showUserList = <Message error={true} message={error} />;
-    }
-    if (!isLoading && usersList.length > 0) {
+    } else if (usersList.length > 0) {
         showUserList = (
-            <div>
+            <div className="space-y-3">
                 {usersList.map((item) => (
                     <TableRow key={item.id} data={item} />
                 ))}
             </div>
         );
+    } else {
+        showUserList = <Message error={false} message="No users available." />;
     }
 
-    if (!isLoading && usersList.length === 0 && !isError) {
-        showUserList = <Message error={false} message="No users available " />;
-    }
     return (
         <Container>
-            <div className="py-24">
-                <h1 className="text-center text-2xl text-primary  font-bold mb-4">
+            <div className="py-24 max-w-5xl mx-auto">
+                <h1 className="text-center text-3xl text-primary font-extrabold mb-6 tracking-wide">
                     All Users
                 </h1>
-                <TableHeader />
 
-                <div>{showUserList}</div>
+                <div className="overflow-hidden rounded-xl shadow-lg border border-gray-200 bg-white">
+                    <TableHeader />
+
+                    <div className="divide-y divide-gray-200">{showUserList}</div>
+                </div>
             </div>
         </Container>
     );
